@@ -1,9 +1,8 @@
 module.exports = function(sequelize, Sequelize) {
-  var listOfLists = squelize.define("list", {
-    id: Sequelize.INTEGER,
+  var model = sequelize.define("list", {
     title: Sequelize.STRING,
   });
-  return listOfLists;
+  return model;
 }
 
 

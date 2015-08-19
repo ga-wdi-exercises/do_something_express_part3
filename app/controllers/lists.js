@@ -5,7 +5,7 @@ var List = require("../models/list")
 function error(response, message){
   response.status(500);
   response.json({error: message})
-}
+};
 
 router.get("/lists", function(req, res){
   return res.json(List);
