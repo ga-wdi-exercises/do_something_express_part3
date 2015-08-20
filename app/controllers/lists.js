@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var DB = require("../../config/connection");
 var List = require("../models/list")
 
 function error(response, message){
@@ -8,11 +9,15 @@ function error(response, message){
 }
 
 router.get("/lists", function(req, res){
-  return res.json(List);
+  List.findAll({order: "id"}).then(function(lists){
+    res.json(lists)
+  });
 });
 
 router.post("/lists", function(req, res){
-  List.push(req.body);
+  List.create(req.body).then(function(list){
+    res.json(list);
+  });
   return res.json(req.body);
 });
 
