@@ -6,11 +6,12 @@ function error(response, message){
   response.status(500);
   response.json({error: message})
 }
-
+//index: get all tasks
 router.get("/lists", function(req, res){
   return res.json(List);
 });
 
+//show: show a specific task
 router.post("/lists", function(req, res){
   List.push(req.body);
   return res.json(req.body);
