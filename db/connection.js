@@ -11,6 +11,6 @@ module.exports = {
   sequelize: sequelize,
   models: {
     List: List,
-    Artist: Artist
+    Task: Task
   }
 };
