@@ -9,12 +9,12 @@ DB.models.List.bulkCreate(Seeds.lists)
   return DB.models.List.findAll();
 })
 .then(function(lists){
-  var a, list, s, task, tasks, output = [];
-  for(a = 0; a < lists.length; a++){
-    list = lists[a];
-    tasks = Seeds.tasks[list.name];
-    for(s = 0; s < tasks.length; s++){
-      task = tasks[s];
+  var l, list, t, task, tasks, output = [];
+  for(l = 0; l < lists.length; l++){
+    list = lists[l];
+    tasks = Seeds.tasks[list.title];
+    for(t = 0; t < tasks.length; s++){
+      task = tasks[t];
       task.listId = list.id;
       output.push(task);
     }

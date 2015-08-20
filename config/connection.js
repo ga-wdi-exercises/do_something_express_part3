@@ -11,7 +11,7 @@ module.exports = {
   Sequelize: Sequelize,
   sequelize: sequelize,
   models: {
-    Task: Task,
-    List: List
+    List: List,
+    Task: Task
   }
 }

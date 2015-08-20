@@ -1,15 +1,11 @@
 [
     {
-        "id": 1,
-        "title": "Errands",
+        "title": "Errands"
     },
     {
-        "id": 2,
-        "title": "Things that are better than WDI",
+        "title": "Things that are better than WDI"
     },
     {
-        "id": 3,
-        "title": "WDI To-Dos",
+        "title": "WDI To-Dos"
     }
-
 ]
