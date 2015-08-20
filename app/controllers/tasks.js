@@ -1,5 +1,8 @@
+//dependancies?
 var express = require("express");
 var router = express.Router();
+//linking connection file and models
+var DB = require("../../db/connection");
 var Task = require("../models/task");
 var List = require("../models/list");
 
