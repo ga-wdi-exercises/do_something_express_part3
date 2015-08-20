@@ -1,47 +1,50 @@
 var express = require("express");
 var router = express.Router();
-var List = require("../models/list")
+var DB = require("../../db/connection.js");
+var List = DB.models.List;
 
 function error(response, message){
   response.status(500);
-  response.json({error: message})
+  response.json({error: message});
 }
 
 router.get("/lists", function(req, res){
-  return res.json(List);
+  List.findAll().then(function (lists) {
+    res.json(lists);
+  });
 });
 
 router.post("/lists", function(req, res){
-  List.push(req.body);
-  return res.json(req.body);
+  List.create(req.body).then(function (list) {
+    res.json(list);
+  });
 });
 
 router.get("/lists/:id", function(req, res){
-  for(var l = 0; l < List.length; l++){
-    if(List[l].id == req.params.id){
-      return res.json(List[l]);
-    }
-  }
+  List.findById(req.params.id).then(function (list) {
+    res.json(list);
+  });
 });
 
 router.put("/lists/:id", function(req, res){
-  for(var l = 0; l < List.length; l++){
-    if(List[l].id == req.params.id){
-      List[l] = req.body;
-      return res.json(List[l]);
-    }
-  }
-  return error(res, "not found");
+  List.findById(req.params.id).then(function(list){
+    if(!list) return error(res, "not found");
+    return list.updateAttributes(req.body); //WHAT DOES THIS LINE DO?
+  })
+  .then(function (list) {
+    res.json(list);
+  });
 });
 
 router.delete("/lists/:id", function(req, res){
-  for(var l = 0; l < List.length; l++){
-    if(List[l].id == req.params.id){
-      delete List[l];
-      return res.json(List[l]);
-    }
-  }
-  return error(res, "not found");
+  List.findById(req.params.id)
+  .then(function (list) {
+    if(!list) return error(res, "not found");
+    return list.destroy(); //WHAT DOES THIS LINE DO?
+  })
+  .then(function(list){
+    res.json(list);
+  });
 });
 
 module.exports = router;
