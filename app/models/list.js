@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize){
-  var model = sequelize.define("list", {
+  return sequelize.define("list", {
     title: Sequelize.STRING
   });
 }

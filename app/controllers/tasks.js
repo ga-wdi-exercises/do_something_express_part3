@@ -10,59 +10,56 @@ function error(response, message){
 }
 
 router.get("/tasks", function(req, res){
-  return res.json(Task);
+  Task.findAll().then(function(tasks){
+      return res.json(tasks);
+  })
 });
 
 router.get("/tasks/:id", function(req, res){
-  for(var t = 0; t < Task.length; t++){
-    if(Task[t].id == req.params.id){
-      return res.json(Task[t]);
-    }
-  }
-  return error(res, "not found");
+  Task.findById(req.params.id).then(function(task){
+      return res.json(task);
+  })
 });
 
 router.put("/tasks/:id", function(req, res){
-  for(var t = 0; t < Task.length; t++){
-    if(Task[t].id == req.params.id){
-      Task[t] = req.body;
-      return res.json(Task[t]);
-    }
-  }
-  return error(res, "not found");
+  Task.findById(req.params.id).then(function(task){
+    if(!task) return error(res, "not found");
+  return task.updateAttributes(req.body)
+})
+    .then(function(task){
+    return res.json(task);
+});
 });
 
 router.delete("/tasks/:id", function(req, res){
-  for(var t = 0; t < Task.length; t++){
-    if(Task[t].id == req.params.id){
-      delete Task[t];
-      return res.json({"success": true});
-    }
-  }
-  return error(res, "not found");
+  Task.findById(req.params.id)
+    .then(function(task){
+      if(!task) return error(res, "not found");
+      return task.destroy()
+    })
+    .then(function(task){
+      return res.json(task)
 });
-
+});
+// utilized solution branch to solve similar start to the lists controller but it looks like .get and .create can but used to read and create when they belong to another model
 router.get("/lists/:listId/tasks", function(req, res){
-  var tasks = [];
-  for(var t = 0; t < Task.length; t++){
-    if(Task[t].listId == req.params.listId){
-      tasks.push(Task[t]);
-    }
-  }
+  List.findById(req.params.id).then(function(list){
+      if(!list) return error(res, "not found");
+      return list.getTasks();
+    })
+  .then(function(tasks){
   return res.json(tasks);
+});
 });
 
 router.post("/lists/:listId/tasks", function(req, res){
-  var task;
-  for(var l = 0; l < List.length; l++){
-    if(List[l].id == req.params.listId){
-      task = req.body;
-      task.listId = req.params.listId;
-      Task.push(task);
-      return res.json(task);
-    }
-  }
-  return error(res, "not found");
-});
+  List.findById(req.params.id).then(function(list){
+      if(!list) return error(res, "not found");
+      return list.createTask(req.body);
+    })
+  .then(function(tasks){
+  return res.json(tasks);
+  });
+  });
 
 module.exports = router;
