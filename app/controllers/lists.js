@@ -29,7 +29,7 @@ router.get("/lists/:id", function(req, res){
 router.put("/lists/:id", function(req, res){
   List.findByid(req.params.id).then(function(list){
     if(!list) return error(res, "not found");
-    return list.updateAttributes.(req.body);
+    return list.updateAttributes(req.body);
   })
   .then(function(list){
     res.json(list)
