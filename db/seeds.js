@@ -1,10 +1,26 @@
-{id: 1, title:"Errands"},
-{id: 2, title:"Things that are better than WDI"},
-{id: 3, title:"WDI To-Dos"}
-]
+var DB = require("./connection.js");
+var Seeds = {
+  lists: require("./list_data.json"),
+  tasks: require("./task_data.json")
+};
 
-[
-  {id: 1, body:"Water the plants", completed: false, listId: 1},
-  {id: 2, body:"Feed the cat", completed: true, listId: 1},
-  {id: 3, body:"Send the WDI instructors a nice card", completed: false, listId: 3}
-]
+DB.models.List.bulkCreate(Seeds.lists)
+.then(function(){
+  return DB.models.List.findAll();
+})
+.then(function(lists){
+  var l, list, t, task, tasks, output = [];
+  for(l = 0; l < lists.length; l++){
+    list = lists[l];
+    tasks = Seeds.tasks[list.title];
+    for(t = 0; t < tasks.length; t++){
+      task = tasks[t];
+      task.listId = list.id;
+      output.push(task);
+    }
+  }
+  return DB.models.Task.bulkCreate(output);
+})
+.then(function(){
+  process.exit();
+});
