@@ -9,40 +9,44 @@ function error(response, message){
 }
 
 router.get("/lists", function(req, res){
-  return res.json(List);
+  List.findAll({order: "id"}).then(function(lists){
+    res.json(lists);
+  });
 });
 
 router.post("/lists", function(req, res){
-  List.push(req.body);
-  return res.json(req.body);
+  List.create(req.body).then(function(list){
+    res.json(list);
+  });
 });
 
 router.get("/lists/:id", function(req, res){
-  for(var l = 0; l < List.length; l++){
-    if(List[l].id == req.params.id){
-      return res.json(List[l]);
-    }
-  }
+  List.findById(req.params.id).then(function(list){
+    res.json(list);
+  });
 });
 
 router.put("/lists/:id", function(req, res){
-  for(var l = 0; l < List.length; l++){
-    if(List[l].id == req.params.id){
-      List[l] = req.body;
-      return res.json(List[l]);
-    }
-  }
-  return error(res, "not found");
+  List.findById(req.params.id)
+  .then(function(list){
+    if(!list)
+      return error(res, "not found");
+    return list.updateAttributes(req.body);
+  })
+  .then (function(list){
+    res.json(list);
+  });
 });
 
 router.delete("/lists/:id", function(req, res){
-  for(var l = 0; l < List.length; l++){
-    if(List[l].id == req.params.id){
-      delete List[l];
-      return res.json(List[l]);
-    }
-  }
-  return error(res, "not found");
+  List.findById(req.params.id)
+  .then(function(list){
+    if(!list) return error(res, "not found");
+    return list.destroy()
+  })
+  .then(function(list){
+    res.json(list)
+  });
 });
 
 module.exports = router;
