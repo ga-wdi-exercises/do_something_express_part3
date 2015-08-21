@@ -10,6 +10,8 @@ app.use("/", express.static(path.join(__dirname + "/public")));
 var listsController = require("./app/controllers/lists");
 var tasksController = require("./app/controllers/tasks");
 
+app.set("view engine", "hbs")
+
 app.get("/", function(req, res){
   //shows the routes
   var raw = listsController.stack.concat(tasksController.stack);
