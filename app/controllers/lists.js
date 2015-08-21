@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var DB = require("../../config/connection");
+var DB = require("../config/connection");
 var List = require("../models/list")
 
 function error(response, message){
@@ -38,7 +38,7 @@ router.get("/lists/:id", function(req, res){
 router.put("/lists/:id", function(req, res){
 
   List.findById(req.params.id)
-  .then(function(list{
+  .then(function(list){
     if(!list) return error(res, "not found");
     return list.updateAttributes(req.body);
   })
