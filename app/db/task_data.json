@@ -1,0 +1,16 @@
+{
+  "Errands":[
+    {
+      "body":"Water the plants",
+      "completed": false,
+    },
+    {
+      "body":"Feed the cat",
+      "completed": true,
+    },
+    {
+      "body":"Send the WDI instructors a nice card",
+      "completed": false,
+    }
+  ]
+}
