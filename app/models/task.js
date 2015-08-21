@@ -1,6 +1,6 @@
 module.exports = function(sequelize, Sequelize){
   return sequelize.define("task", {
-    body: Sequelize.STRING,
+    body: Sequelize.TEXT,
     completed: BOOLEAN
   });
 };

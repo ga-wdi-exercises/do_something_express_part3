@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+
 var List = require("../models/list")
 
 function error(response, message){
@@ -39,16 +40,6 @@ router.post("/lists", function(req, res){
 router.get("/lists/:id", function(req, res){
   var list;
   List.findById(req.params.id)
-  .then(function(a){
-    if(!a) return error(res, "Not found.");
-    List.sing();
-    a.shout();
-    list = a;
-    return list.getTasks()
-  })
-  .then(function(tasks){
-    res.render("lists/show", {list: list, task: tasks});
-  });
 });
 
 // router.put("/lists/:id", function(req, res){
@@ -64,17 +55,6 @@ router.get("/lists/:id", function(req, res){
 router.put("/lists/:id", function(req, res){
   var updatedList, songs;
   List.findById(req.params.id)
-  .then(function(list){
-    if(!list) return error(res, "Not found.");
-    return list.updateAttributes(req.body)
-  })
-  .then(function(list){
-    updatedList = list;
-    return updatedList.getTasks()
-  })
-  .then(function(tasks){
-    res.render("lists/show", {list: updatedList, tasks: tasks});
-  });
 });
 
 // router.delete("/lists/:id", function(req, res){

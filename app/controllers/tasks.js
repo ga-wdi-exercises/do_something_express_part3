@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+// var DB = require("../../config/connection");
 var Task = require("../models/task");
 var List = require("../models/list");
 
@@ -12,17 +13,15 @@ function error(response, message){
 //   return res.json(Task);
 // });
 
+
+// Index. get all task
+// router.get("/tasks", function(req, res){
+//   Task.findAll({order: "id"})
+// }
+
 router.get("/tasks", function(req, res){
   var tasks;
   Task.findAll()
-  .then(function(s){
-    tasks = s;
-    return List.findAll()
-  })
-
-  .then(function(lists){
-    res.render("tasks/index", {tasks: tasksWithListNames(tasks, lists)});
-  });
 });
 
 // router.get("/tasks/:id", function(req, res){
@@ -37,16 +36,6 @@ router.get("/tasks", function(req, res){
 router.get("/tasks/:id", function(req, res){
   var task;
   Task.findById(req.params.id)
-  .then(function(s){
-    if(!s) return error(res, "Not found.");
-    task = s;
-    return task.getList();
-  })
-
-  .then(function(list){
-    task.listName = list.name;
-    res.render("tasks/show", {task: task});
-  });
 });
 
 // router.put("/tasks/:id", function(req, res){
@@ -62,16 +51,6 @@ router.get("/tasks/:id", function(req, res){
 router.put("/tasks/:id", function(req, res){
   var task;
   if(!req.body.listId) return error(res, "List not found.");
-  Task.findById(req.params.id)
-  .then(function(s){
-    if(!s) return error(res, "not found");
-    task = s;
-    return task.updateAttributes(req.body);
-  })
-
-  .then(function(updatedTask){
-    res.redirect("/tasks/" + updatedTask.id);
-  });
 });
 
 // router.delete("/tasks/:id", function(req, res){
@@ -86,14 +65,6 @@ router.put("/tasks/:id", function(req, res){
 
 router.delete("/tasks/:id", function(req, res){
   Task.findById(req.params.id)
-  .then(function(task){
-    if(!task) return error(res, "Not found.");
-    return task.destroy();
-  })
-
-  .then(function(){
-    res.redirect("/tasks");
-  });
 });
 
 // router.get("/lists/:listId/tasks", function(req, res){

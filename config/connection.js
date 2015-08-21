@@ -3,6 +3,8 @@ var sequelize = new Sequelize("postgres:///something_db");
 var List = sequelize.import("../models/list");
 var Tast = sequelize.import("../models/task");
 
+//console.log(sequel)
+
 Task.belongsTo(List);
 List.hasMany(Task);
 
