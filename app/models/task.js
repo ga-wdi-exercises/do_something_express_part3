@@ -2,7 +2,7 @@ module.exports = function(sequelize, Sequelize){
   return sequelize.define("task", {
     body: Sequelize.TEXT,
     completed: Sequelize.BOOLEAN,
-    listId: Sequelize.INTEGER,
+    listId: Sequelize.INTEGER
   });
 }
 

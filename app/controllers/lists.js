@@ -10,7 +10,7 @@ function error(response, message){
 
 router.get("/lists", function(req, res){
   List.findAll({order: "id"}).then(function(lists){
-    res.json(lists;
+    res.json(lists);
   });
 });
 
