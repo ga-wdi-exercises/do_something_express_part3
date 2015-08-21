@@ -1,6 +1,12 @@
 var express = require("express");
 var router = express.Router();
-var List = require("../db/connection").models.List
+//var List = require("../db/connection").models.List
+//Saw this was in tunr ^^
+var List = DB.models.List;
+var Task = DB.models.Task;
+// and this in solution. ^^ any difference?
+
+
 
 function error(response, message){
   response.status(500);

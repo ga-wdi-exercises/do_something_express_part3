@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Task = require("../db/connection").models.Task;
+var Task = require("../db/").models.Task;
 var List = require("../models/list");
 
 function error(response, message){
