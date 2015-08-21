@@ -49,9 +49,8 @@ router.get("/lists/:listId/tasks", function(req, res){
 });
 
 router.post("/lists/:listId/tasks", function(req, res){
-  Task.create(req.body).then(function(task) {
-    task.listId = req.params.lsitId
-    res.json(task)
+  Task.create({body: req.body.body, completed: req.body.completed == "true", listId: req.params.listId}).then(function(task) {
+    res.json(task);
   })
 });
 
