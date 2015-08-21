@@ -4,7 +4,7 @@ var Seeds = {
   tasks: require("./task_data")
 }
 
-DB.models.List.bulkCreate(Seeds.lists)
+// DB.models.List.bulkCreate(Seeds.lists)
 .then(function(){
   return DB.models.List.findAll();
 })
