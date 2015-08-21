@@ -7,8 +7,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/", express.static(path.join(__dirname + "/public")));
 
-var listsController = require("./app/controllers/lists");
-var tasksController = require("./app/controllers/tasks");
+var listsController = require("./controllers/lists");
+var tasksController = require("./controllers/tasks");
 
 app.get("/", function(req, res){
   //shows the routes
