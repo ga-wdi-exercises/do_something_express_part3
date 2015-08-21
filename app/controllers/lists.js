@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var DB = require("../db/connection");
-// var List = require("../models/list");
+var DB = require("../app/db/connection");
 var List = DB.models.List;
 
 function error(response, message){
@@ -30,7 +29,6 @@ router.get("/lists/:id", function(req, res){
 router.put("/lists/:id", function(req, res){
   List.findById(req.params.id)
   .then(function(list){
-    if!(list) return error(res, "not found");
     return list.updateAttributes(req.body);
   })
   .then(function(list){
@@ -41,7 +39,6 @@ router.put("/lists/:id", function(req, res){
 router.delete("/lists/:id", function(req, res){
   List.findById(req.params.id)
   .then(function(list){
-    if(!list) return error(res, "not found");
     return list.destroy()
   })
   .then(function(list){
